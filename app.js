@@ -99,18 +99,18 @@ function renderProducts() {
 
   productsContainer.innerHTML = state.filteredProducts.map(product => {
     const currentPrice = product.precoPromocional ? product.precoPromocional : product.preco;
-    const oldPriceHtml = product.precoPromocional
-      ? `<span class="price-old">R$ ${product.preco.toFixed(2).replace('.', ',')}</span>`
+    const oldPriceHtml = product.precoPromocional 
+      ? `<span class="price-old">R$ ${product.preco.toFixed(2).replace('.', ',')}</span>` 
       : '';
-    const badgeHtml = product.badge
-      ? `<span class="product-badge">${product.badge}</span>`
+    const badgeHtml = product.badge 
+      ? `<span class="product-badge">${product.badge}</span>` 
       : '';
-    const promoTagHtml = product.emPromocao
-      ? `<span class="product-promo-tag">OFERTA</span>`
+    const promoTagHtml = product.emPromocao 
+      ? `<span class="product-promo-tag">OFERTA</span>` 
       : '';
 
     return `
-      <div class="product-card fade-in">
+      <div class="product-card fade-in" onclick="openProductDetail('${product.id}', event)">
         <div class="card-media">
           <img src="${product.imagem}" alt="${product.nome}" loading="lazy">
           ${badgeHtml}
@@ -124,7 +124,7 @@ function renderProducts() {
               ${oldPriceHtml}
               <span class="price-current">R$ ${currentPrice.toFixed(2).replace('.', ',')}</span>
             </div>
-            <button class="add-to-cart-btn" onclick="addToCart('${product.id}')" aria-label="Adicionar ${product.nome}">
+            <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('${product.id}')" aria-label="Adicionar ${product.nome}">
               <span class="material-symbols-rounded">add</span>
             </button>
           </div>
@@ -218,6 +218,68 @@ function setupEventListeners() {
     clearCart();
   });
 }
+
+// Product Details Modal
+window.openProductDetail = function(productId, event) {
+  if (event && event.target.closest('.add-to-cart-btn')) return;
+
+  const product = state.products.find(p => p.id === productId);
+  if (!product) return;
+
+  const productDetailCard = document.getElementById('productDetailCard');
+  const productDetailModal = document.getElementById('productDetailModal');
+  if (!productDetailCard || !productDetailModal) return;
+
+  const currentPrice = product.precoPromocional ? product.precoPromocional : product.preco;
+  const oldPriceHtml = product.precoPromocional 
+    ? `<span class="price-old" style="font-size: 0.9rem;">R$ ${product.preco.toFixed(2).replace('.', ',')}</span>` 
+    : '';
+
+  productDetailCard.innerHTML = `
+    <div class="modal-header">
+      <h2 class="modal-title">
+        <span class="material-symbols-rounded">info</span> Detalhes do Petisco
+      </h2>
+      <button class="modal-close-btn" onclick="closeModal(document.getElementById('productDetailModal'))">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 16px;">
+      <img src="${product.imagem}" alt="${product.nome}" style="width: 100%; max-height: 220px; object-fit: cover; border-radius: var(--radius-md);">
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+        <span class="product-badge" style="position: static;">${product.badge || 'Artesanal'}</span>
+        <span style="font-size: 0.8rem; background: var(--surface-muted); padding: 4px 10px; border-radius: var(--radius-full); text-transform: capitalize;">
+          Pet: ${product.pet === 'cao' ? 'Cães 🐶' : 'Gatos 🐱'}
+        </span>
+      </div>
+      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700;">${product.nome}</h3>
+      <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.95rem;">${product.descricao}</p>
+    </div>
+
+    <div style="background: var(--surface-muted); padding: 14px; border-radius: var(--radius-md); margin-bottom: 20px;">
+      <p style="font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; color: var(--primary-dark); margin-bottom: 4px;">🌱 Ingredientes & Informações Nutricionais</p>
+      <p style="font-size: 0.85rem; color: var(--text-main);">Ingredientes selecionados 100% naturais, sem aditivos químicos, livre de corantes artificiais e preparado sob rígido controle de qualidade.</p>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+      <div>
+        ${oldPriceHtml}
+        <div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--primary-dark);">
+          R$ ${currentPrice.toFixed(2).replace('.', ',')}
+        </div>
+      </div>
+      <button class="btn-primary" onclick="addToCart('${product.id}'); closeModal(document.getElementById('productDetailModal'));" style="flex: 1; max-width: 220px;">
+        <span class="material-symbols-rounded">add_shopping_cart</span> Adicionar
+      </button>
+    </div>
+  `;
+
+  openModal(productDetailModal);
+};
 
 // Modal Helpers
 function openModal(modal) {
@@ -388,12 +450,14 @@ async function triggerCredentialsVerification() {
   const consoleLog = document.getElementById('credentialsConsoleLog');
   if (!consoleLog) return;
 
-  consoleLog.innerHTML = `<span class="material-symbols-rounded">info</span> <span>Tentando navigator.credentials.get()...</span>`;
+  consoleLog.className = 'alert-box alert-info';
+  consoleLog.innerHTML = `<span class="material-symbols-rounded">info</span> <span>Iniciando navigator.credentials.get()...</span>`;
 
   if (!navigator.credentials || !navigator.credentials.get) {
-    const msg = 'API CredentialsContainer não disponível neste navegador. Prosseguindo...';
-    console.log('[PetiscoPet Security]', msg);
-    consoleLog.innerHTML = `<span class="material-symbols-rounded">warning</span> <span>${msg}</span>`;
+    const msg = 'Erro: API CredentialsContainer não é suportada por este navegador/ambiente.';
+    console.warn('[PetiscoPet Security Error]', msg);
+    consoleLog.className = 'alert-box alert-warning';
+    consoleLog.innerHTML = `<span class="material-symbols-rounded">warning</span> <span>${msg} (Você pode prosseguir ao pagamento normalmente).</span>`;
     return;
   }
 
@@ -404,16 +468,23 @@ async function triggerCredentialsVerification() {
       mediation: 'optional'
     });
 
-    const resultMsg = cred
-      ? `Credencial validada com sucesso: ${cred.id || 'Credencial Nível 1'}`
-      : 'Credencial não retornada ou fluxo ignorado. Prosseguindo normalmente.';
-
-    console.log('[PetiscoPet Security Credential Result]:', cred || 'Nenhuma credencial retornada');
-    consoleLog.innerHTML = `<span class="material-symbols-rounded">check_circle</span> <span>${resultMsg}</span>`;
+    if (cred) {
+      const resultMsg = `Credencial obtida: ID = ${cred.id || 'Credencial Nível 1'} | Tipo = ${cred.type || 'Password/Biometric'}`;
+      console.log('[PetiscoPet Security Credential Success]:', cred);
+      consoleLog.className = 'alert-box alert-success';
+      consoleLog.innerHTML = `<span class="material-symbols-rounded">check_circle</span> <span>${resultMsg}</span>`;
+    } else {
+      const resultMsg = 'Nenhuma credencial salva foi selecionada ou retornada pelo navegador.';
+      console.log('[PetiscoPet Security Notice]:', resultMsg);
+      consoleLog.className = 'alert-box alert-warning';
+      consoleLog.innerHTML = `<span class="material-symbols-rounded">info</span> <span>${resultMsg}</span>`;
+    }
   } catch (err) {
-    const errorMsg = `Aviso/Erro no Credentials: ${err.message || 'Tentativa cancelada'}`;
-    console.log('[PetiscoPet Security Notice]:', errorMsg);
-    consoleLog.innerHTML = `<span class="material-symbols-rounded">info</span> <span>Aviso: Autenticação cancelada ou não configurada. Prosseguindo para o pagamento...</span>`;
+    const exactError = err.name ? `${err.name}: ${err.message}` : err.toString();
+    const errorMsg = `Erro na verificação de credenciais: ${exactError}`;
+    console.error('[PetiscoPet Security Exception]:', err);
+    consoleLog.className = 'alert-box alert-warning';
+    consoleLog.innerHTML = `<span class="material-symbols-rounded">error</span> <span><strong>${errorMsg}</strong>. Prosseguindo sem credencial.</span>`;
   }
 }
 

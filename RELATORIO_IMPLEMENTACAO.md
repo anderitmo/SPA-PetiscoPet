@@ -13,11 +13,12 @@ Este relatório detalha a análise da especificação e as alterações implemen
 
 2. **`index.html`**:
    - Estrutura completa da SPA.
-   - Inclui o Header fixo com marca e contador do carrinho, Hero Banner promocional, controles segmentados para alternar o tipo de pet (Cães, Gatos, Todos), chips de categorias e o grid responsivo de exibição dos produtos.
+   - Inclui o Header fixo com marca e contador do carrinho, Hero Banner promocional, controles segmentados para alternar o tipo de pet (Cães com ícone padronizado `pets`, Gatos, Todos), chips de categorias e o grid responsivo de exibição dos produtos.
    - Contém os modais da jornada de compra:
+     - **Modal 0:** Detalhes do Produto (foto ampliada, descrição completa, ingredientes e botão de adição direta).
      - **Modal 1:** Carrinho de compras com listagem e alteração de quantidade.
      - **Modal 2:** Form de Cadastro do cliente e botão de Geolocalização.
-     - **Modal 3:** Verificação de segurança nativa (`navigator.credentials.get()`).
+     - **Modal 3:** Verificação de segurança nativa (`navigator.credentials.get()`) com exibição detalhada de erros/status em tela.
      - **Modal 4:** Gateway de Pagamento Simulado (Pix/Cartão).
      - **Modal 5:** Confirmação do pedido e botão de disparo com link pré-formatado para o WhatsApp (`wa.me/5511999212704`).
    - Barra inferior flutuante para facilitar a interação mobile.
@@ -33,9 +34,10 @@ Este relatório detalha a análise da especificação e as alterações implemen
    - Lógica de negócio da SPA:
      - **Carregamento assíncrono:** Leitura dinâmica de `products.json`.
      - **Filtros dinâmicos:** Filtragem instantânea por cão/gato e por categoria/promoções.
+     - **Modal de Detalhes:** Ao clicar em um produto, exibe modal rico em detalhes antes de adicionar ao carrinho.
      - **Carrinho e LocalStorage:** Armazenamento persistente no navegador (`petiscopet_cart`), suporte a adição, remoção, alteração de quantidade e cálculo automático de totais.
      - **Geolocalização:** Integração com `navigator.geolocation.getCurrentPosition()`. Em caso de recusa ou indisponibilidade, realiza fallback gracioso para o endereço digitado sem interromper o fluxo.
-     - **Web Credentials API:** Executa `navigator.credentials.get()`, exibe status informativo e loga os resultados no console do navegador para fins de estudo.
+     - **Web Credentials API Transparente:** Executa `navigator.credentials.get()`, exibe em tela o status ou a mensagem exata de erro (`NotAllowedError`, `SecurityError`, etc.) para total transparência ao usuário.
      - **Pagamento Simulado:** Simulação de aprovação instantânea.
      - **Integração WhatsApp:** Formatação da mensagem e geração do link `wa.me/5511999212704` contendo o nome do cliente, e-mail, telefone, endereço, localização GPS (se disponível), itens comprados (nome × quantidade), valor total e confirmação de pagamento.
 
@@ -48,10 +50,10 @@ Este relatório detalha a análise da especificação e as alterações implemen
 | **Vanilla JS/HTML/CSS (sem pacotes)** | ✅ Concluído | Desenvolvido com APIs puras do navegador |
 | **Hospedável no GitHub Pages** | ✅ Concluído | Todos os caminhos são relativos |
 | **Carga de dados de JSON** | ✅ Concluído | `products.json` criado e consumido via `fetch()` |
-| **Listagem inicial sem cadastro** | ✅ Concluído | Produtos são exibidos de imediato na tela principal |
+| **Listagem inicial e Detalhes** | ✅ Concluído | Produtos em grid + Modal de Detalhes ao clicar |
 | **Uso de LocalStorage** | ✅ Concluído | Persistência do carrinho em `petiscopet_cart` |
 | **Geolocalização no Cadastro** | ✅ Concluído | Captura lat/long com fallback para endereço digitado |
-| **API CredentialsContainer** | ✅ Concluído | `navigator.credentials.get()` logado no console |
+| **API CredentialsContainer com mensagens** | ✅ Concluído | Exibe erros exatos e logs em tela e console |
 | **Gateway de Pagamento Simulado** | ✅ Concluído | Modal de simulação com opção Pix/Cartão |
 | **Link WhatsApp (wa.me/5511999212704)** | ✅ Concluído | Link gerado com mensagem detalhada pré-formatada |
 | **Paleta de Cores e Fontes da SPEC/Design System** | ✅ Concluído | Poppins, Open Sans, cores primárias/secundárias |
@@ -59,5 +61,8 @@ Este relatório detalha a análise da especificação e as alterações implemen
 
 ---
 
-## Conclusão
-A aplicação foi completamente desenvolvida atendendo integralmente às diretrizes de especificação funcional e visual solicitadas.
+## Refinamentos Realizados
+
+1. **Remoção de "sound_detection_dog":** Ícone corrigido para `pets` no seletor de pets Cães.
+2. **Página/Modal de Detalhes do Produto:** Adicionado fluxo interativo para ver mais informações sobre cada petisco.
+3. **Transparência no CredentialsContainer:** Tratamento explícito de exceções e exibição em tela do motivo em caso de falha/cancelamento na verificação de credenciais.
