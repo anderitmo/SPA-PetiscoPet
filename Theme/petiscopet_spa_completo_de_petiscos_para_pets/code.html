@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PetiscoPet - Cardápio de Petiscos</title>
+  
+  <!-- Google Fonts: Poppins & Open Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Material Symbols Outlined -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <style>
+    :root {
+      --cyan-bright: #24FCFF;
+      --mint-accent: #68FFCE;
+      --soft-sky: #BEE9FF;
+      --green-lime: #20FF6B;
+      --blue-accent: #77A7FF;
+      --primary-dark: #003666;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --bg-light: #ffffff;
+      --bg-card: #f8fafc;
+      --border-subtle: #e2e8f0;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 6px 16px rgba(32, 255, 107, 0.08), 0 4px 12px rgba(119, 167, 255, 0.08);
+      --shadow-float: 0 10px 25px rgba(0, 54, 102, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f1f5f9;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    #app-container {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header.main-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .brand-logo-img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cart-btn-badge {
+      position: relative;
+      background: #eff6ff;
+      border: 1px solid var(--soft-sky);
+      border-radius: 12px;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-dark);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s;
+    }
+
+    .cart-btn-badge:active {
+      transform: scale(0.92);
+    }
+
+    .cart-counter {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--text-main);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 19px;
+      height: 19px;
+      padding: 0 4px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+    }
+
+    /* Views / Transitions */
+    .view-screen {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      padding: 16px;
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      padding-bottom: 90px;
+    }
+
+    .view-screen.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Poppins', sans-serif;
+      color: var(--primary-dark);
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #BEE9FF 0%, #68FFCE 100%);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(36,252,255,0.4) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.85);
+      color: var(--primary-dark);
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #04294b;
+      margin-bottom: 4px;
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      color: #1e3a5f;
+      line-height: 1.35;
+    }
+
+    /* Segmented Pet Filter */
+    .filter-section {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pet-tabs {
+      display: flex;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      gap: 4px;
+    }
+
+    .pet-tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pet-tab.active {
+      background: #ffffff;
+      color: var(--primary-dark);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    /* Category Pill Badges */
+    .cat-scroll-track {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .cat-scroll-track::-webkit-scrollbar { display: none; }
+
+    .cat-pill {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      white-space: nowrap;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .cat-pill.active {
+      background: var(--soft-sky);
+      border-color: var(--blue-accent);
+      color: var(--primary-dark);
+    }
+
+    /* Product Grid */
+    .section-headline {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 14px 0 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+    }
+
+    .product-card:active {
+      transform: scale(0.985);
+    }
+
+    .promo-ribbon {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--green-lime);
+      color: #034b1c;
+      font-size: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(32, 255, 107, 0.35);
+      z-index: 2;
+    }
+
+    .pet-badge-icon {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255,255,255,0.9);
+      color: var(--primary-dark);
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      z-index: 2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .product-thumb {
+      height: 105px;
+      background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue-accent);
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .product-thumb .material-symbols-outlined {
+      font-size: 46px;
+      color: #77A7FF;
+      transition: transform 0.2s ease;
+    }
+
+    .product-card:hover .product-thumb .material-symbols-outlined {
+      transform: scale(1.1);
+    }
+
+    .product-content {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .product-category-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .product-name {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 33px;
+    }
+
+    .product-desc-snippet {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.3;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-pricing-wrap {
+      margin-top: auto;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .product-old-price {
+      font-size: 11px;
+      color: #94a3b8;
+      text-decoration: line-through;
+    }
+
+    .product-current-price {
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .btn-add-cart {
+      width: 100%;
+      background: var(--soft-sky);
+      border: 1px solid var(--blue-accent);
+      color: var(--primary-dark);
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add-cart:hover {
+      background: var(--mint-accent);
+    }
+
+    .btn-add-cart:active {
+      transform: scale(0.95);
+      background: var(--green-lime);
+    }
+
+    /* Cart Floating Bar (when items in cart) */
+    .cart-float-bar {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 408px;
+      background: var(--primary-dark);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-float);
+      z-index: 50;
+      cursor: pointer;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: translate(-50%, 20px); opacity: 0; }
+      to { transform: translate(-50%, 0); opacity: 1; }
+    }
+
+    .cart-float-bar .info-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cart-float-bar .btn-badge-circle {
+      background: var(--cyan-bright);
+      color: var(--primary-dark);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-float-bar .view-cart-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .cart-float-bar .price-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--green-lime);
+    }
+
+    /* CART VIEW */
+    .cart-items-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .cart-item-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+
+    .cart-item-meta {
+      flex: 1;
+      padding-right: 12px;
+    }
+
+    .cart-item-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .cart-item-unit-price {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .qty-btn:active {
+      background: #f1f5f9;
+    }
+
+    .qty-num {
+      width: 28px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .summary-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    .summary-row.total {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 10px;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+
+    /* Common Buttons */
+    .btn-action {
+      background: linear-gradient(135deg, var(--cyan-bright) 0%, var(--green-lime) 100%);
+      color: #033a1e;
+      border: none;
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(32, 255, 107, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:active {
+      transform: scale(0.98);
+      filter: brightness(0.95);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn-secondary:active {
+      background: #f8fafc;
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--primary-dark);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 10px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text-main);
+      background: #ffffff;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--blue-accent);
+      box-shadow: 0 0 0 3px rgba(119, 167, 255, 0.2);
+    }
+
+    .geo-button-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .btn-geo {
+      background: #f0fdf4;
+      border: 1px solid var(--green-lime);
+      color: #166534;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .geo-status-indicator {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Security Box (Step 5) */
+    .security-card {
+      background: #f0f9ff;
+      border: 1px solid var(--soft-sky);
+      border-radius: 14px;
+      padding: 16px;
+      margin: 16px 0;
+      text-align: center;
+    }
+
+    .security-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      color: var(--blue-accent);
+      border: 1px solid var(--soft-sky);
+    }
+
+    /* Success / WA Screen */
+    .success-badge {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: #15803d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px auto;
+    }
+
+    .success-badge .material-symbols-outlined {
+      font-size: 40px;
+    }
+
+    .order-preview-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 16px 0;
+      font-size: 12px;
+      color: #334155;
+      white-space: pre-wrap;
+      font-family: monospace;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    /* Loading modal simulation */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #fff;
+      width: calc(100% - 48px);
+      max-width: 360px;
+      border-radius: 18px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid var(--soft-sky);
+      border-top-color: var(--primary-dark);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 10px auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .banner-wa-link {
+      background: #25D366;
+      color: #ffffff;
+      border: none;
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      transition: transform 0.2s ease;
+    }
+    .banner-wa-link:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app-container">
+    
+    <!-- Header Fixo -->
+    <header class="main-header">
+      <div class="brand-logo-wrap" onclick="navTo('catalog')">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe9fNYfS0N6PkGGubqvbbE88t6mPY7G3uvGQxva1sGGCx0PqjEn-seV-6L4CzAo9hLJW4xEXlpE0TsZtIalCKcisONcex2V3a4BYRk9_EyZkt1p-6UXyFrc4jtXrRynfdNePwca-E-zC7CFzPDps0f5Q44k2KmdBh_n1On26UiWEdMJXReP7nzrWVDWlrwtv9Nb4w5sXbYy8ATLK8eXOlFdO6aMK8sWs7yC89Yav_mkbx1fy9fL77PPiJFAmB5i3gn" alt="PetiscoPet" class="brand-logo-img" />
+      </div>
+      <div class="header-actions">
+        <div class="cart-btn-badge" onclick="navTo('cart')">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="cart-counter" id="cartBadgeCount">0</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- TELA 1: CARDÁPIO / CATÁLOGO (Início Imediato Sem Cadastro) -->
+    <section id="view-catalog" class="view-screen active">
+      <div class="hero-banner">
+        <span class="hero-tag">Cardápio Saudável & Natural</span>
+        <h1 class="hero-title">Petiscos Artesanais para Cães & Gatos</h1>
+        <p class="hero-desc">100% livre de conservantes químicos e recheados de sabor para seu pet.</p>
+      </div>
+
+      <!-- Filtros: Cães / Gatos / Todos -->
+      <div class="filter-section">
+        <div class="pet-tabs">
+          <button class="pet-tab active" data-pet="todos" onclick="setPetFilter('todos', this)">
+            <span class="material-symbols-outlined" style="font-size:18px;">pets</span>
+            Todos
+          </button>
+          <button class="pet-tab" data-pet="cao" onclick="setPetFilter('cao', this)">
+            <span class="material-symbols-outlined" style="font-size:18px;">sound_detection_dog_barking</span>
+            Cachorros
+          </button>
+          <button class="pet-tab" data-pet="gato" onclick="setPetFilter('gato', this)">
+            <span class="material-symbols-outlined" style="font-size:18px;">cruelty_free</span>
+            Gatos
+          </button>
+        </div>
+
+        <!-- Categorias -->
+        <div class="cat-scroll-track" id="categoryPills">
+          <button class="cat-pill active" onclick="setCategoryFilter('todas', this)">
+            <span class="material-symbols-outlined" style="font-size:16px;">category</span> Todas
+          </button>
+          <button class="cat-pill" onclick="setCategoryFilter('petiscos', this)">Petiscos Secos</button>
+          <button class="cat-pill" onclick="setCategoryFilter('bifinhos', this)">Bifinhos & Mastigáveis</button>
+          <button class="cat-pill" onclick="setCategoryFilter('patês', this)">Patês & Úmidos</button>
+          <button class="cat-pill" onclick="setCategoryFilter('especiais', this)">Funcionais</button>
+        </div>
+      </div>
+
+      <div class="section-headline">
+        <span id="catalogCountLabel">Cardápio do Dia</span>
+        <span style="font-size: 11px; font-weight: normal; color: var(--text-muted);" id="filterNotice">Todos os produtos</span>
+      </div>
+
+      <!-- Grid de Produtos alimentados pelo JSON -->
+      <div class="products-grid" id="productsGrid">
+        <!-- Renderizado dinamicamente -->
+      </div>
+    </section>
+
+    <!-- BARRA FLUTUANTE DE CARRINHO (visível quando houver itens e estiver no catálogo) -->
+    <div id="cartFloatingBar" class="cart-float-bar" style="display: none;" onclick="navTo('cart')">
+      <div class="info-left">
+        <div class="btn-badge-circle" id="floatBarCount">1</div>
+        <span class="view-cart-text">Ver Carrinho</span>
+      </div>
+      <div class="price-right">
+        <span id="floatBarTotal">R$ 0,00</span>
+        <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+      </div>
+    </div>
+
+    <!-- TELA 2: CARRINHO (Localstorage) -->
+    <section id="view-cart" class="view-screen">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+        <button onclick="navTo('catalog')" style="border:none; background:none; cursor:pointer; color:var(--primary-dark); display:flex;">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h2 style="font-size: 18px;">Seu Carrinho</h2>
+      </div>
+
+      <div id="cartItemsList" class="cart-items-container">
+        <!-- Renderizado via JS / LocalStorage -->
+      </div>
+
+      <div id="cartEmptyState" style="display:none; text-align:center; padding: 40px 10px;">
+        <span class="material-symbols-outlined" style="font-size: 56px; color: var(--text-muted);">remove_shopping_cart</span>
+        <h3 style="margin-top:10px; font-size:16px;">Seu carrinho está vazio</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">Adicione deliciosos petiscos para o seu melhor amigo!</p>
+        <button class="btn-secondary" style="max-width:200px; margin: 16px auto 0;" onclick="navTo('catalog')">Ir às compras</button>
+      </div>
+
+      <div id="cartSummaryBlock">
+        <div class="summary-card">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="cartSubtotalText">R$ 0,00</span>
+          </div>
+          <div class="summary-row">
+            <span>Entrega</span>
+            <span style="color:#16a34a; font-weight:600;">A combinar no WA</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="cartTotalText">R$ 0,00</span>
+          </div>
+        </div>
+
+        <button class="btn-action" onclick="navTo('checkout')">
+          <span>Fechar Pedido</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+        <button class="btn-secondary" onclick="navTo('catalog')">Adicionar mais itens</button>
+      </div>
+    </section>
+
+    <!-- TELA 3: CADASTRO COM GEOLOCATION (Exigido apenas no Checkout) -->
+    <section id="view-checkout" class="view-screen">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+        <button onclick="navTo('cart')" style="border:none; background:none; cursor:pointer; color:var(--primary-dark); display:flex;">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h2 style="font-size: 18px;">Dados para Entrega</h2>
+      </div>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+        Informe seus dados para prepararmos o pedido do seu pet. Não exigimos senha.
+      </p>
+
+      <form id="checkoutForm" onsubmit="event.preventDefault(); proceedToSecurity();">
+        <div class="form-group">
+          <label class="form-label" for="custName">Nome Completo *</label>
+          <input type="text" id="custName" class="form-input" placeholder="Ex: Maria Silva" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="custWhatsapp">WhatsApp *</label>
+          <input type="tel" id="custWhatsapp" class="form-input" placeholder="(11) 99999-9999" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="custEmail">E-mail *</label>
+          <input type="email" id="custEmail" class="form-input" placeholder="seuemail@exemplo.com" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="custAddress">Endereço de Entrega *</label>
+          <input type="text" id="custAddress" class="form-input" placeholder="Rua, Número, Bairro, Complemento" required />
+          
+          <div class="geo-button-group">
+            <button type="button" class="btn-geo" onclick="captureGeolocation()">
+              <span class="material-symbols-outlined" style="font-size:16px;">my_location</span>
+              Preencher com GPS atual
+            </button>
+          </div>
+          <div class="geo-status-indicator" id="geoStatus">
+            <span class="material-symbols-outlined" style="font-size:14px;">info</span>
+            <span>Geolocalização opcional. Se negada, digite acima normalmente.</span>
+          </div>
+        </div>
+
+        <input type="hidden" id="geoCoordinates" value="" />
+
+        <button type="submit" class="btn-action" style="margin-top: 18px;">
+          <span>Continuar para Validação</span>
+          <span class="material-symbols-outlined">security</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- TELA 4: SEGURANÇA E PROVA DE VIDA (CredentialsContainer) -->
+    <section id="view-security" class="view-screen">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+        <button onclick="navTo('checkout')" style="border:none; background:none; cursor:pointer; color:var(--primary-dark); display:flex;">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h2 style="font-size: 18px;">Verificação de Segurança</h2>
+      </div>
+
+      <div class="security-card">
+        <div class="security-icon">
+          <span class="material-symbols-outlined" style="font-size:28px;">fingerprint</span>
+        </div>
+        <h3 style="font-size:15px; margin-bottom: 6px;">Autenticação do Dispositivo</h3>
+        <p style="font-size:12px; color:var(--text-muted); line-height: 1.4;">
+          Usamos a tecnologia de credenciais do seu aparelho (biometria ou PIN) como prova de vida e camada extra de segurança contra fraudes.
+        </p>
+      </div>
+
+      <div id="securityLogBox" style="background:#f8fafc; border: 1px dashed var(--border-subtle); border-radius:10px; padding:10px; font-size:11px; color:#475569; margin-bottom:16px;">
+        <div style="font-weight:700; margin-bottom:4px; display:flex; align-items:center; gap:4px;">
+          <span class="material-symbols-outlined" style="font-size:14px;">terminal</span> Status da API:
+        </div>
+        <span id="securityStatusText">Pronto para testar navigator.credentials</span>
+      </div>
+
+      <button class="btn-action" onclick="triggerCredentialsAuth()">
+        <span class="material-symbols-outlined">verified_user</span>
+        <span>Validar Biometria / Credencial</span>
+      </button>
+
+      <button class="btn-secondary" onclick="skipOrProceedPayment('Pulado manualmente pelo usuário')">
+        <span>Prosseguir sem verificação biométrica</span>
+      </button>
+    </section>
+
+    <!-- TELA 5: GATEWAY DE PAGAMENTO GENÉRICO (SIMULAÇÃO) -->
+    <section id="view-payment" class="view-screen">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+        <button onclick="navTo('security')" style="border:none; background:none; cursor:pointer; color:var(--primary-dark); display:flex;">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h2 style="font-size: 18px;">Simulação de Pagamento</h2>
+      </div>
+
+      <div class="summary-card" style="border-left: 4px solid var(--blue-accent);">
+        <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Ambiente de Demonstração</div>
+        <div style="font-size:14px; font-weight:700; color:var(--primary-dark); margin-top:2px;">PetiscoPet Gateway Sandbox</div>
+        <div class="summary-row total" style="margin-top:8px;">
+          <span>Valor do Pedido</span>
+          <span id="payAmountLabel">R$ 0,00</span>
+        </div>
+      </div>
+
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Selecione uma forma para simular a liquidação:</p>
+
+      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom: 20px;">
+        <label style="display:flex; align-items:center; gap:10px; padding:12px; background:#f8fafc; border:1px solid var(--border-subtle); border-radius:10px; cursor:pointer;">
+          <input type="radio" name="paymentMethod" value="PIX Instantâneo" checked />
+          <span class="material-symbols-outlined" style="color:#0ea5e9;">qr_code_2</span>
+          <div>
+            <div style="font-size:13px; font-weight:700;">PIX Automático (Aprovação Imediata)</div>
+            <div style="font-size:11px; color:var(--text-muted);">Simulação de chave dinâmica</div>
+          </div>
+        </label>
+
+        <label style="display:flex; align-items:center; gap:10px; padding:12px; background:#f8fafc; border:1px solid var(--border-subtle); border-radius:10px; cursor:pointer;">
+          <input type="radio" name="paymentMethod" value="Cartão de Crédito" />
+          <span class="material-symbols-outlined" style="color:#6366f1;">credit_card</span>
+          <div>
+            <div style="font-size:13px; font-weight:700;">Cartão de Crédito (Demonstração)</div>
+            <div style="font-size:11px; color:var(--text-muted);">Autorização simulada</div>
+          </div>
+        </label>
+
+        <label style="display:flex; align-items:center; gap:10px; padding:12px; background:#f8fafc; border:1px solid var(--border-subtle); border-radius:10px; cursor:pointer;">
+          <input type="radio" name="paymentMethod" value="Pagar na Entrega (Maquininha/Dinheiro)" />
+          <span class="material-symbols-outlined" style="color:#22c55e;">payments</span>
+          <div>
+            <div style="font-size:13px; font-weight:700;">Pagar na Entrega</div>
+            <div style="font-size:11px; color:var(--text-muted);">Pague quando o motoboy chegar</div>
+          </div>
+        </label>
+      </div>
+
+      <button class="btn-action" onclick="simulatePaymentProcess()">
+        <span class="material-symbols-outlined">lock</span>
+        <span>Confirmar e Simular Pagamento</span>
+      </button>
+    </section>
+
+    <!-- TELA 6: PEDIDO CONCLUÍDO & BOTÃO WHATSAPP (+5511999212704) -->
+    <section id="view-success" class="view-screen">
+      <div class="success-badge">
+        <span class="material-symbols-outlined">check_circle</span>
+      </div>
+
+      <h2 style="text-align:center; font-size:20px; margin-bottom:4px;">Pedido Pré-Confirmado!</h2>
+      <p style="text-align:center; font-size:12px; color:var(--text-muted); margin-bottom:16px;">
+        Clique no botão abaixo para enviar os dados diretamente para a cozinha PetiscoPet no WhatsApp.
+      </p>
+
+      <div style="font-size:12px; font-weight:700; color:var(--primary-dark); margin-bottom:4px;">Resumo gerado para o WhatsApp:</div>
+      <div id="orderSummaryWaText" class="order-preview-box">
+        <!-- Texto pré-formatado -->
+      </div>
+
+      <a id="btnSendWhatsapp" href="#" target="_blank" class="banner-wa-link">
+        <span class="material-symbols-outlined">chat</span>
+        <span>Enviar Pedido pelo WhatsApp</span>
+      </a>
+
+      <button class="btn-secondary" style="margin-top:14px;" onclick="resetAppAndShopAgain()">
+        <span class="material-symbols-outlined">restart_alt</span>
+        <span>Fazer Novo Pedido</span>
+      </button>
+    </section>
+
+    <!-- Modal de Carregamento da Simulação de Pagamento -->
+    <div id="paymentModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="spinner"></div>
+        <h4 style="font-size:16px; margin-bottom:6px;">Processando com o Gateway</h4>
+        <p style="font-size:12px; color:var(--text-muted);" id="paymentModalStatus">Conectando ao terminal de pagamento...</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ==========================================================================
+       1. BASE DE DADOS JSON FICTÍCIA DE PRODUTOS PARA PETS (Cães e Gatos)
+       ========================================================================== */
+    const databaseJSON = {
+      "config": {
+        "whatsapp": "5511999212704",
+        "storeName": "PetiscoPet Lanchonete Pet",
+        "currency": "BRL"
+      },
+      "produtos": [
+        {
+          "id": "pet-001",
+          "nome": "Bifinho Artesanal de Frango & Batata Doce",
+          "pet": "cao",
+          "categoria": "bifinhos",
+          "preco": 14.90,
+          "precoPromocional": 11.90,
+          "descricao": "Rico em fibras naturais, desidratado lentamente sem sódio adicionado.",
+          "icon": "bone"
+        },
+        {
+          "id": "pet-002",
+          "nome": "Snack Crocante de Salmão & Erva de Gato",
+          "pet": "gato",
+          "categoria": "petiscos",
+          "preco": 16.50,
+          "precoPromocional": 13.50,
+          "descricao": "Contém catnip especial e ômega 3 para pelagem macia e brilhante.",
+          "icon": "phishing"
+        },
+        {
+          "id": "pet-003",
+          "nome": "Patê Gourmet de Carne Bovina & Cenoura",
+          "pet": "cao",
+          "categoria": "patês",
+          "preco": 12.00,
+          "precoPromocional": null,
+          "descricao": "Sachê úmido 100g, textura aveludada para cães exigentes.",
+          "icon": "soup_kitchen"
+        },
+        {
+          "id": "pet-004",
+          "nome": "Sachê Cremoso Atum Selvagem & Abóbora",
+          "pet": "gato",
+          "categoria": "patês",
+          "preco": 10.90,
+          "precoPromocional": 8.90,
+          "descricao": "Favorece a hidratação renal diária do seu felino com sabor irresistível.",
+          "icon": "set_meal"
+        },
+        {
+          "id": "pet-005",
+          "nome": "Cookie DentalCare Menta & Spirulina",
+          "pet": "cao",
+          "categoria": "especiais",
+          "preco": 18.00,
+          "precoPromocional": 15.00,
+          "descricao": "Ajuda a reduzir o tártaro e refresca o hálito de forma 100% natural.",
+          "icon": "dentistry"
+        },
+        {
+          "id": "pet-006",
+          "nome": "Pastilhas Anti-Bolas de Pelo Malte & Levedo",
+          "pet": "gato",
+          "categoria": "especiais",
+          "preco": 17.50,
+          "precoPromocional": null,
+          "descricao": "Auxilia na digestão suave e eliminação natural dos pelos acumulados.",
+          "icon": "medication"
+        },
+        {
+          "id": "pet-007",
+          "nome": "Orelha Suína Bovina Desidratada Mastigável",
+          "pet": "cao",
+          "categoria": "bifinhos",
+          "preco": 22.90,
+          "precoPromocional": 19.90,
+          "descricao": "Mastigável de longa duração que acalma a ansiedade e diverte por horas.",
+          "icon": "cookie"
+        },
+        {
+          "id": "pet-008",
+          "nome": "Crispies de Peito de Peru Liofilizado",
+          "pet": "gato",
+          "categoria": "petiscos",
+          "preco": 19.90,
+          "precoPromocional": 16.90,
+          "descricao": "Puro pedaço de peru conservado a frio com todos nutrientes originais.",
+          "icon": "egg"
+        }
+      ]
+    };
+
+    /* ==========================================================================
+       2. ESTADO DA APLICAÇÃO & LOCALSTORAGE
+       ========================================================================== */
+    const STORAGE_KEY = 'petiscopet_cart_v1';
+    let cart = [];
+    let currentPetFilter = 'todos';
+    let currentCategoryFilter = 'todas';
+    let customerData = {
+      name: '',
+      whatsapp: '',
+      email: '',
+      address: '',
+      coordinates: ''
+    };
+    let simulatedPaymentResult = null;
+
+    // Inicialização ao carregar
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCartFromStorage();
+      renderCatalog();
+      updateCartBadgeAndFloatingBar();
+    });
+
+    function loadCartFromStorage() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          cart = JSON.parse(saved);
+        }
+      } catch (e) {
+        console.error("Erro ao carregar localStorage:", e);
+        cart = [];
+      }
+    }
+
+    function saveCartToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+      } catch (e) {
+        console.error("Erro ao salvar localStorage:", e);
+      }
+      updateCartBadgeAndFloatingBar();
+    }
+
+    /* ==========================================================================
+       3. NAVEGAÇÃO SPA ENTRE VIEWS
+       ========================================================================== */
+    function navTo(screenName) {
+      document.querySelectorAll('.view-screen').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('view-' + screenName);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      const floatBar = document.getElementById('cartFloatingBar');
+      if (screenName === 'catalog') {
+        updateCartBadgeAndFloatingBar();
+      } else {
+        floatBar.style.display = 'none';
+      }
+
+      if (screenName === 'cart') {
+        renderCartView();
+      } else if (screenName === 'payment') {
+        renderPaymentSummary();
+      }
+    }
+
+    /* ==========================================================================
+       4. CATÁLOGO & FILTROS
+       ========================================================================== */
+    function setPetFilter(petType, btn) {
+      currentPetFilter = petType;
+      document.querySelectorAll('.pet-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCatalog();
+    }
+
+    function setCategoryFilter(category, btn) {
+      currentCategoryFilter = category;
+      document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCatalog();
+    }
+
+    function formatBRL(value) {
+      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function renderCatalog() {
+      const container = document.getElementById('productsGrid');
+      container.innerHTML = '';
+
+      const filtered = databaseJSON.produtos.filter(prod => {
+        const matchPet = currentPetFilter === 'todos' || prod.pet === currentPetFilter;
+        const matchCat = currentCategoryFilter === 'todas' || prod.categoria === currentCategoryFilter;
+        return matchPet && matchCat;
+      });
+
+      document.getElementById('filterNotice').innerText = `${filtered.length} opções encontradas`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 30px 10px; color: var(--text-muted);">
+            <span class="material-symbols-outlined" style="font-size: 40px; margin-bottom: 6px;">search_off</span>
+            <p style="font-size: 13px;">Nenhum petisco encontrado para os filtros selecionados.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(p => {
+        const isPromo = p.precoPromocional !== null;
+        const finalPrice = isPromo ? p.precoPromocional : p.preco;
+        const petIconName = p.pet === 'cao' ? 'sound_detection_dog_barking' : 'cruelty_free';
+
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          ${isPromo ? `<div class="promo-ribbon">PROMOÇÃO</div>` : ''}
+          <div class="pet-badge-icon" title="${p.pet === 'cao' ? 'Para Cães' : 'Para Gatos'}">
+            <span class="material-symbols-outlined" style="font-size:15px;">${petIconName}</span>
+          </div>
+          <div class="product-thumb">
+            <span class="material-symbols-outlined">${p.icon || 'pets'}</span>
+          </div>
+          <div class="product-content">
+            <div class="product-category-sub">${p.categoria}</div>
+            <div class="product-name">${p.nome}</div>
+            <div class="product-desc-snippet">${p.descricao}</div>
+            <div class="product-pricing-wrap">
+              ${isPromo ? `<span class="product-old-price">${formatBRL(p.preco)}</span>` : ''}
+              <span class="product-current-price">${formatBRL(finalPrice)}</span>
+            </div>
+            <button class="btn-add-cart" onclick="addToCart('${p.id}')">
+              <span class="material-symbols-outlined" style="font-size:16px;">add_shopping_cart</span>
+              Adicionar
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    /* ==========================================================================
+       5. CARRINHO EM LOCALSTORAGE
+       ========================================================================== */
+    function addToCart(productId) {
+      const prod = databaseJSON.produtos.find(item => item.id === productId);
+      if (!prod) return;
+
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qtd += 1;
+      } else {
+        const finalPrice = prod.precoPromocional !== null ? prod.precoPromocional : prod.preco;
+        cart.push({
+          id: prod.id,
+          nome: prod.nome,
+          preco: finalPrice,
+          pet: prod.pet,
+          qtd: 1
+        });
+      }
+
+      saveCartToStorage();
+
+      // Feedback háptico visual no badge
+      const badge = document.getElementById('cartBadgeCount');
+      badge.style.transform = 'scale(1.3)';
+      setTimeout(() => badge.style.transform = 'scale(1)', 200);
+    }
+
+    function updateItemQty(productId, change) {
+      const itemIndex = cart.findIndex(i => i.id === productId);
+      if (itemIndex > -1) {
+        cart[itemIndex].qtd += change;
+        if (cart[itemIndex].qtd <= 0) {
+          cart.splice(itemIndex, 1);
+        }
+      }
+      saveCartToStorage();
+      renderCartView();
+    }
+
+    function updateCartBadgeAndFloatingBar() {
+      const totalItems = cart.reduce((acc, i) => acc + i.qtd, 0);
+      const totalPrice = cart.reduce((acc, i) => acc + (i.preco * i.qtd), 0);
+
+      document.getElementById('cartBadgeCount').innerText = totalItems;
+
+      const floatBar = document.getElementById('cartFloatingBar');
+      const isCatalogActive = document.getElementById('view-catalog').classList.contains('active');
+
+      if (totalItems > 0 && isCatalogActive) {
+        floatBar.style.display = 'flex';
+        document.getElementById('floatBarCount').innerText = totalItems;
+        document.getElementById('floatBarTotal').innerText = formatBRL(totalPrice);
+      } else {
+        floatBar.style.display = 'none';
+      }
+    }
+
+    function renderCartView() {
+      const listContainer = document.getElementById('cartItemsList');
+      const emptyState = document.getElementById('cartEmptyState');
+      const summaryBlock = document.getElementById('cartSummaryBlock');
+
+      listContainer.innerHTML = '';
+
+      if (cart.length === 0) {
+        emptyState.style.display = 'block';
+        summaryBlock.style.display = 'none';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      summaryBlock.style.display = 'block';
+
+      let total = 0;
+      cart.forEach(item => {
+        const itemTotal = item.preco * item.qtd;
+        total += itemTotal;
+
+        const el = document.createElement('div');
+        el.className = 'cart-item-card';
+        el.innerHTML = `
+          <div class="cart-item-meta">
+            <div class="cart-item-title">${item.nome}</div>
+            <div class="cart-item-unit-price">${formatBRL(item.preco)} × ${item.qtd} = <b>${formatBRL(itemTotal)}</b></div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="updateItemQty('${item.id}', -1)">-</button>
+            <span class="qty-num">${item.qtd}</span>
+            <button class="qty-btn" onclick="updateItemQty('${item.id}', 1)">+</button>
+          </div>
+        `;
+        listContainer.appendChild(el);
+      });
+
+      document.getElementById('cartSubtotalText').innerText = formatBRL(total);
+      document.getElementById('cartTotalText').innerText = formatBRL(total);
+    }
+
+    /* ==========================================================================
+       6. CADASTRO & GEOLOCATION
+       ========================================================================== */
+    function captureGeolocation() {
+      const statusEl = document.getElementById('geoStatus');
+      const addressInput = document.getElementById('custAddress');
+      const coordsHidden = document.getElementById('geoCoordinates');
+
+      if (!('geolocation' in navigator)) {
+        statusEl.innerHTML = `<span style="color:#e11d48;" class="material-symbols-outlined">warning</span> Navegador não suporta geolocalização. Continue preenchendo acima.`;
+        return;
+      }
+
+      statusEl.innerHTML = `<span class="material-symbols-outlined" style="font-size:14px; animation: spin 1s infinite linear;">sync</span> Obtendo satélite...`;
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude.toFixed(6);
+          const lng = pos.coords.longitude.toFixed(6);
+          coordsHidden.value = `${lat}, ${lng}`;
+          statusEl.innerHTML = `<span style="color:#16a34a;" class="material-symbols-outlined">check_circle</span> GPS Coordenadas capturadas (${lat}, ${lng})`;
+          
+          if (!addressInput.value.trim()) {
+            addressInput.value = `Localização GPS: Lat ${lat}, Long ${lng} (Ajuste ou complete número/apto)`;
+          }
+        },
+        (err) => {
+          console.warn("Geolocalização não concedida ou com erro:", err.message);
+          coordsHidden.value = "";
+          statusEl.innerHTML = `<span style="color:#d97706;" class="material-symbols-outlined">info</span> Localização negada/indisponível. Prossiga digitando seu endereço manualmente.`;
+        },
+        { timeout: 8000, enableHighAccuracy: true }
+      );
+    }
+
+    function proceedToSecurity() {
+      if (cart.length === 0) {
+        alert("Seu carrinho está vazio!");
+        navTo('catalog');
+        return;
+      }
+
+      customerData.name = document.getElementById('custName').value.trim();
+      customerData.whatsapp = document.getElementById('custWhatsapp').value.trim();
+      customerData.email = document.getElementById('custEmail').value.trim();
+      customerData.address = document.getElementById('custAddress').value.trim();
+      customerData.coordinates = document.getElementById('geoCoordinates').value;
+
+      navTo('security');
+    }
+
+    /* ==========================================================================
+       7. CREDENTIALSCONTAINER (Prova de Vida / Biometria com Fallback Elegante)
+       ========================================================================== */
+    async function triggerCredentialsAuth() {
+      const logBox = document.getElementById('securityStatusText');
+      logBox.innerHTML = "Invocando <code>navigator.credentials.get()</code>...";
+
+      if (!window.navigator || !window.navigator.credentials) {
+        const msg = "API CredentialsContainer não suportada neste navegador.";
+        console.log("[CredentialsContainer Log]:", msg);
+        logBox.innerHTML = `<span style="color:#d97706;">${msg}</span> Prosseguindo normalmente para o pagamento.`;
+        setTimeout(() => skipOrProceedPayment("API não suportada"), 1500);
+        return;
+      }
+
+      try {
+        // Gera um desafio aleatório de 32 bytes para WebAuthn
+        const challenge = new Uint8Array(32);
+        window.crypto.getRandomValues(challenge);
+
+        const options = {
+          publicKey: {
+            challenge: challenge,
+            timeout: 60000,
+            userVerification: "preferred"
+          }
+        };
+
+        console.log("[CredentialsContainer Log]: Solicitando credenciais do dispositivo...", options);
+        
+        // Chamada real à API
+        const credential = await navigator.credentials.get(options);
+
+        console.log("[CredentialsContainer Log]: Sucesso na autenticação!", credential);
+        logBox.innerHTML = `<span style="color:#16a34a; font-weight:700;">Autenticação realizada com sucesso!</span> Prova de vida validada.`;
+        setTimeout(() => skipOrProceedPayment("Biometria / Credencial Validada com Sucesso"), 1000);
+      } catch (err) {
+        // Falha, cancelamento pelo usuário ou sem autenticador cadastrado
+        console.log("[CredentialsContainer Log Result (Estudo)]:", {
+          name: err.name,
+          message: err.message,
+          stack: err.stack
+        });
+
+        logBox.innerHTML = `<span style="color:#d97706;">Aviso: Autenticador não configurado ou cancelado (${err.name}). Continuando fluxo com segurança...</span>`;
+        setTimeout(() => skipOrProceedPayment(`Verificação biométrica ignorada/aviso: ${err.name}`), 1600);
+      }
+    }
+
+    function skipOrProceedPayment(reason) {
+      console.log("[Fluxo PetiscoPet]: Avançando para Gateway de Pagamento. Razão:", reason);
+      navTo('payment');
+    }
+
+    /* ==========================================================================
+       8. SIMULAÇÃO DE GATEWAY DE PAGAMENTO
+       ========================================================================== */
+    function renderPaymentSummary() {
+      const total = cart.reduce((acc, i) => acc + (i.preco * i.qtd), 0);
+      document.getElementById('payAmountLabel').innerText = formatBRL(total);
+    }
+
+    function simulatePaymentProcess() {
+      const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const modal = document.getElementById('paymentModal');
+      const modalStatus = document.getElementById('paymentModalStatus');
+
+      modal.classList.add('active');
+      modalStatus.innerText = `Autenticando transação via ${selectedMethod}...`;
+
+      setTimeout(() => {
+        modalStatus.innerText = "Autorização simulada recebida com sucesso!";
+        setTimeout(() => {
+          modal.classList.remove('active');
+          finalizeOrder(selectedMethod);
+        }, 1000);
+      }, 1500);
+    }
+
+    /* ==========================================================================
+       9. GERAÇÃO DO LINK WHATSAPP (+5511999212704) E RESUMO
+       ========================================================================== */
+    function finalizeOrder(paymentMethod) {
+      const total = cart.reduce((acc, i) => acc + (i.preco * i.qtd), 0);
+      
+      let itemsListText = "";
+      cart.forEach(item => {
+        itemsListText += `• ${item.nome} (${item.qtd}x) - ${formatBRL(item.preco * item.qtd)}\n`;
+      });
+
+      const gpsInfo = customerData.coordinates ? `\n📍 GPS: ${customerData.coordinates}` : '';
+
+      const waMessage = 
+`*NOVO PEDIDO - PETISCOPET* 🐾
+=============================
+*Cliente:* ${customerData.name}
+*WhatsApp:* ${customerData.whatsapp}
+*E-mail:* ${customerData.email}
+*Endereço:* ${customerData.address}${gpsInfo}
+
+*ITENS DO PEDIDO:*
+${itemsListText}
+*VALOR TOTAL:* ${formatBRL(total)}
+*Pagamento:* ${paymentMethod} (Simulado no SPA)
+=============================
+_Pedido pronto para confirmação e envio!_`;
+
+      document.getElementById('orderSummaryWaText').innerText = waMessage;
+
+      const encodedMessage = encodeURIComponent(waMessage);
+      const waUrl = `https://wa.me/5511999212704?text=${encodedMessage}`;
+
+      const btnWa = document.getElementById('btnSendWhatsapp');
+      btnWa.href = waUrl;
+
+      // Limpa carrinho após fechar pedido
+      cart = [];
+      saveCartToStorage();
+
+      navTo('success');
+    }
+
+    function resetAppAndShopAgain() {
+      navTo('catalog');
+    }
+  </script>
+</body>
+</html>

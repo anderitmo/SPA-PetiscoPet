@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>PetiscoPet</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;family=Poppins:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-high": "#e2e7ff", "surface": "#faf8ff", "on-tertiary-fixed-variant": "#00513d", "outline": "#737783", "surface-container-low": "#f2f3ff", "on-tertiary": "#ffffff", "on-secondary-container": "#007072", "on-tertiary-fixed": "#002117", "on-primary-fixed-variant": "#004491", "error": "#ba1a1a", "on-secondary": "#ffffff", "surface-tint": "#245db0", "secondary-container": "#20fbfe", "error-container": "#ffdad6", "inverse-primary": "#acc7ff", "surface-bright": "#faf8ff", "tertiary-fixed": "#64fbcb", "surface-container-highest": "#dae2fd", "surface-dim": "#d2d9f4", "outline-variant": "#c3c6d3", "surface-container-lowest": "#ffffff", "secondary": "#00696b", "secondary-fixed": "#20fbfe", "on-secondary-fixed-variant": "#004f50", "on-primary": "#ffffff", "surface-variant": "#dae2fd", "secondary-fixed-dim": "#00dcdf", "on-primary-fixed": "#001a40", "tertiary-container": "#00be92", "inverse-surface": "#283044", "on-error": "#ffffff", "on-surface-variant": "#424752", "primary": "#245db0", "on-primary-container": "#003b7e", "primary-container": "#77a7ff", "primary-fixed": "#d7e2ff", "tertiary-fixed-dim": "#40deb0", "surface-container": "#eaedff", "on-background": "#131b2e", "on-error-container": "#93000a", "on-tertiary-container": "#004634", "inverse-on-surface": "#eef0ff", "primary-fixed-dim": "#acc7ff", "on-secondary-fixed": "#002020", "on-surface": "#131b2e", "tertiary": "#006c52", "background": "#faf8ff" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "space-2xs": "0.25rem", "space-xl": "2rem", "space-xs": "0.5rem", "space-md": "1rem", "gutter-mobile": "1rem", "gutter-desktop": "1.5rem", "space-lg": "1.5rem", "space-sm": "0.75rem", "margin-desktop": "2rem", "space-2xl": "3rem", "margin-mobile": "1.25rem" }, fontFamily: { "display-lg": ["Poppins"], "headline-sm": ["Poppins"], "label-lg": ["Poppins"], "label-sm": ["Poppins"], "body-lg": ["Open Sans"], "body-md": ["Open Sans"], "headline-md": ["Poppins"], "label-md": ["Poppins"], "display-lg-mobile": ["Poppins"], "headline-lg": ["Poppins"], "body-sm": ["Open Sans"] }, fontSize: { "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }], "headline-sm": ["18px", { lineHeight: "26px", fontWeight: "600" }], "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }], "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.03em", fontWeight: "600" }], "body-lg": ["16px", { lineHeight: "26px", fontWeight: "400" }], "body-md": ["14px", { lineHeight: "22px", fontWeight: "400" }], "headline-md": ["22px", { lineHeight: "30px", fontWeight: "600" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }], "display-lg-mobile": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "700" }], "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "600" }], "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }] } } } };</script></head><body class="bg-surface-container-low font-body-md text-on-surface min-h-screen flex flex-col items-center justify-center p-space-md antialiased"><div class="w-full max-w-[480px] min-h-[600px] bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_-2px_rgba(119,167,255,0.08)] flex flex-col justify-center px-gutter-mobile py-space-xl"><main class="w-full bg-surface-container-lowest"><div class="flex flex-col w-full space-y-space-md">
+<!-- Status Badge & Header -->
+<div class="flex flex-col items-center text-center space-y-space-xs pt-space-xs">
+<div class="w-16 h-16 rounded-full bg-tertiary-fixed flex items-center justify-center shadow-lg shadow-tertiary-fixed/30 transform transition-transform hover:scale-105 duration-300">
+<span class="material-symbols-outlined text-on-tertiary-fixed text-[36px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary-fixed-dim/20 text-on-tertiary-fixed-variant font-label-sm text-label-sm tracking-wide uppercase mt-space-2xs">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+      Pedido Confirmado
+    </div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+      Pedido Realizado com Sucesso!
+    </h1>
+<div class="flex flex-wrap items-center justify-center gap-1 text-on-surface-variant font-body-sm text-body-sm">
+<span class="font-semibold text-primary">#PET-8924</span>
+<span>•</span>
+<span>Pagamento Simulado Aprovado</span>
+</div>
+</div>
+<!-- WhatsApp Primary Action Hero Card -->
+<div class="w-full rounded-2xl bg-gradient-to-br from-tertiary-fixed via-tertiary-fixed-dim to-secondary-container p-space-md text-on-tertiary-fixed shadow-md relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-28 h-28 bg-surface-container-lowest/15 rounded-full pointer-events-none blur-sm"></div>
+<div class="relative z-10 flex flex-col space-y-space-sm">
+<div class="flex items-center gap-2">
+<div class="p-1.5 rounded-full bg-surface-container-lowest/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-on-tertiary-fixed">chat</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-tertiary-fixed">
+          Finalize pelo WhatsApp
+        </span>
+</div>
+<p class="font-body-md text-body-md text-on-tertiary-fixed leading-relaxed">
+        Envie seu pedido diretamente para o WhatsApp da PetiscoPet para iniciar o preparo artesanal imediatamente!
+      </p>
+<a class="w-full flex items-center justify-center gap-2 bg-on-tertiary-fixed text-surface-container-lowest font-label-lg text-label-lg py-3.5 px-4 rounded-full shadow-lg hover:bg-on-tertiary-fixed-variant active:scale-[0.98] transition-all duration-200" href="https://wa.me/5511999212704?text=Ol%C3%A1%2C%20PetiscoPet!%20Gostaria%20de%20confirmar%20meu%20pedido%3A%0A%F0%9F%91%A4%20Cliente%3A%20Beatriz%20Albuquerque%0A%F0%9F%93%A6%20Itens%3A%0A%E2%80%A2%202x%20Bifinho%20Artesanal%20de%20Frango%20%26%20Batata%20Doce%20(R%24%2023%2C80)%0A%E2%80%A2%201x%20Snack%20Crocante%20de%20Salm%C3%A3o%20%26%20Erva%20de%20Gato%20(R%24%2013%2C50)%0A%E2%80%A2%201x%20Sach%C3%AA%20Cremoso%20Atum%20Selvagem%20%26%20Ab%C3%B3bora%20(R%24%208%2C90)%0A%F0%9F%92%B0%20Valor%20Total%3A%20R%24%2041%2C20%20(Frete%20Gr%C3%A1tis)%0A%F0%9F%93%8D%20Endere%C3%A7o%3A%20Rua%20dos%20Pinheiros%2C%201020%20-%20Apto%2042B%2C%20Pinheiros%20-%20S%C3%A3o%20Paulo%2FSP%0A%F0%9F%8C%90%20GPS%3A%20-23.55052%2C%20-46.63331%0A%F0%9F%92%B3%20Pagamento%3A%20PIX%20(Simulado)" id="btn-whatsapp" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[20px]">send</span>
+<span>Abrir Pedido no WhatsApp (+55 11 99921-2704)</span>
+</a>
+<div class="flex items-center justify-center gap-1 text-on-tertiary-fixed/80 font-body-sm text-body-sm pt-1">
+<span class="material-symbols-outlined text-[14px]">link</span>
+<span>wa.me/5511999212704</span>
+</div>
+</div>
+</div>
+<!-- Message Preview Container -->
+<div class="flex flex-col space-y-space-xs">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px] text-primary">description</span>
+<span>Texto pré-preenchido que será enviado:</span>
+</div>
+<button class="flex items-center gap-1 text-primary font-label-sm text-label-sm hover:text-on-primary-fixed-variant transition-colors" id="copy-btn">
+<span class="material-symbols-outlined text-[16px]" id="copy-icon">content_copy</span>
+<span id="copy-label">Copiar</span>
+</button>
+</div>
+<!-- WhatsApp Style Bubble -->
+<div class="w-full bg-surface-container-low rounded-2xl p-space-md shadow-sm relative text-on-surface">
+<div class="font-body-sm text-body-sm leading-relaxed whitespace-pre-line text-on-surface" id="order-raw-text">Olá, PetiscoPet! Gostaria de confirmar meu pedido:
+
+👤 Cliente: Beatriz Albuquerque
+📦 Itens:
+• 2x Bifinho Artesanal de Frango &amp; Batata Doce (R$ 23,80)
+• 1x Snack Crocante de Salmão &amp; Erva de Gato (R$ 13,50)
+• 1x Sachê Cremoso Atum Selvagem &amp; Abóbora (R$ 8,90)
+💰 Valor Total: R$ 41,20 (Frete Grátis)
+📍 Endereço: Rua dos Pinheiros, 1020 - Apto 42B, Pinheiros - São Paulo/SP
+🌐 GPS: -23.55052, -46.63331
+💳 Pagamento: PIX (Simulado)</div>
+<div class="flex justify-end items-center gap-1 mt-space-xs text-outline font-body-sm text-[10px]">
+<span>14:32</span>
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">done_all</span>
+</div>
+</div>
+</div>
+<!-- Secondary Actions -->
+<div class="pt-space-xs flex flex-col space-y-space-xs">
+<button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full bg-surface-container font-label-lg text-label-lg text-primary hover:bg-surface-container-high active:scale-[0.98] transition-all" id="copy-full-action">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+<span>Copiar Mensagem Formatada</span>
+</button>
+<a class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">storefront</span>
+<span>Voltar ao Cardápio</span>
+</a>
+</div>
+</div>
+<script>
+  (function() {
+    const rawTextEl = document.getElementById('order-raw-text');
+    const copyBtn = document.getElementById('copy-btn');
+    const copyFullBtn = document.getElementById('copy-full-action');
+    const copyLabel = document.getElementById('copy-label');
+    const copyIcon = document.getElementById('copy-icon');
+
+    function performCopy() {
+      if (!rawTextEl) return;
+      const textToCopy = rawTextEl.innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        if (copyLabel && copyIcon) {
+          copyLabel.textContent = 'Copiado!';
+          copyIcon.textContent = 'check';
+          setTimeout(() => {
+            copyLabel.textContent = 'Copiar';
+            copyIcon.textContent = 'content_copy';
+          }, 2500);
+        }
+        if (copyFullBtn) {
+          const originalText = copyFullBtn.innerHTML;
+          copyFullBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">done</span><span>Mensagem Copiada!</span>';
+          setTimeout(() => {
+            copyFullBtn.innerHTML = originalText;
+          }, 2500);
+        }
+      }).catch(() => {});
+    }
+
+    if (copyBtn) copyBtn.addEventListener('click', performCopy);
+    if (copyFullBtn) copyFullBtn.addEventListener('click', performCopy);
+  })();
+</script></main></div></body></html>
