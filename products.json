@@ -1,0 +1,103 @@
+{
+  "config": {
+    "whatsapp": "5511999212704"
+  },
+  "produtos": [
+    {
+      "id": "petisco-cao-001",
+      "nome": "Bifinho de Frango Artesanal",
+      "pet": "cao",
+      "categoria": "petiscos",
+      "preco": 15.90,
+      "precoPromocional": 11.90,
+      "descricao": "Tiras suculentas de peito de frango desidratado, 100% natural sem conservantes.",
+      "imagem": "https://images.unsplash.com/photo-1582562124811-c09040d0a901?auto=format&fit=crop&w=400&q=80",
+      "badge": "Mais Vendido",
+      "emPromocao": true
+    },
+    {
+      "id": "petisco-cao-002",
+      "nome": "Biscoito Crunch de Carne e Aveia",
+      "pet": "cao",
+      "categoria": "biscoitos",
+      "preco": 18.50,
+      "precoPromocional": null,
+      "descricao": "Biscoitos crocantes assados com carne bovina selecionada e aveia integral.",
+      "imagem": "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=400&q=80",
+      "badge": "Integral",
+      "emPromocao": false
+    },
+    {
+      "id": "petisco-cao-003",
+      "nome": "Ossinho de Cenoura e Hortelã",
+      "pet": "cao",
+      "categoria": "natural",
+      "preco": 14.00,
+      "precoPromocional": 9.90,
+      "descricao": "Ossinhos vegetais perfeitos para o hálito fresco e saúde bucal do seu cão.",
+      "imagem": "https://images.unsplash.com/photo-1535294435445-d7249524ef2e?auto=format&fit=crop&w=400&q=80",
+      "badge": "Hálito Fresco",
+      "emPromocao": true
+    },
+    {
+      "id": "petisco-cao-004",
+      "nome": "Snack Gourmet de Fígado Bovino",
+      "pet": "cao",
+      "categoria": "petiscos",
+      "preco": 22.00,
+      "precoPromocional": null,
+      "descricao": "Pedacinhos crocantes de fígado bovino desidratado lentamente no forno.",
+      "imagem": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=400&q=80",
+      "badge": "Proteico",
+      "emPromocao": false
+    },
+    {
+      "id": "petisco-gato-001",
+      "nome": "Sache Gourmet de Salmão Fresco",
+      "pet": "gato",
+      "categoria": "saches",
+      "preco": 8.90,
+      "precoPromocional": 6.50,
+      "descricao": "Sachê cremoso de salmão fresco rico em Ômega 3 para pelos brilhantes.",
+      "imagem": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=80",
+      "badge": "Rico em Ômega 3",
+      "emPromocao": true
+    },
+    {
+      "id": "petisco-gato-002",
+      "nome": "Petisco Crocante de Atum e Catnip",
+      "pet": "gato",
+      "categoria": "petiscos",
+      "preco": 16.00,
+      "precoPromocional": null,
+      "descricao": "Almofadinhas crocantes recheadas com pasta de atum e um toque de catnip orgânico.",
+      "imagem": "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=400&q=80",
+      "badge": "Com Catnip",
+      "emPromocao": false
+    },
+    {
+      "id": "petisco-gato-003",
+      "nome": "Pasta Cremosa de Frango e Queijo",
+      "pet": "gato",
+      "categoria": "natural",
+      "preco": 12.50,
+      "precoPromocional": 9.90,
+      "descricao": "Snack em bisnaga super saboroso para oferecer diretamente na mão ou misturado na ração.",
+      "imagem": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=400&q=80",
+      "badge": "Favorito",
+      "emPromocao": true
+    },
+    {
+      "id": "petisco-gato-004",
+      "nome": "Tiras de Cordeiro Desidratado",
+      "pet": "gato",
+      "categoria": "petiscos",
+      "preco": 19.90,
+      "precoPromocional": null,
+      "descricao": "Fitas delicadas de carne de cordeiro, ideais para gatos exigentes.",
+      "imagem": "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=400&q=80",
+      "badge": "Sem Glúten",
+      "emPromocao": false
+    }
+  ]
+}
