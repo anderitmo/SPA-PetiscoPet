@@ -53,7 +53,7 @@
           <span class="material-symbols-rounded">grid_view</span> Todos
         </button>
         <button class="pet-switcher-btn" data-pet="cao">
-          <span class="material-symbols-rounded">sound_detection_dog</span> Cães
+          <span class="material-symbols-rounded">pets</span> Cães
         </button>
         <button class="pet-switcher-btn" data-pet="gato">
           <span class="material-symbols-rounded">pets</span> Gatos
@@ -99,6 +99,13 @@
     </div>
   </div>
 
+  <!-- Modal 0: Detalhes do Produto -->
+  <div class="modal-overlay" id="productDetailModal">
+    <div class="modal-card" id="productDetailCard">
+      <!-- Injetado dinamicamente via JS -->
+    </div>
+  </div>
+
   <!-- Modal 1: Carrinho de Compras -->
   <div class="modal-overlay" id="cartModal">
     <div class="modal-card">
@@ -106,7 +113,7 @@
         <h2 class="modal-title">
           <span class="material-symbols-rounded">shopping_cart</span> Meu Carrinho
         </h2>
-        <button class="modal-close-btn" class="closeModal" data-modal="cartModal">
+        <button class="modal-close-btn closeModal" data-modal="cartModal">
           <span class="material-symbols-rounded">close</span>
         </button>
       </div>

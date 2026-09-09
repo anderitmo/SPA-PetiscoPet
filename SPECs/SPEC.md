@@ -8,7 +8,7 @@ A aplicação será um cardápio, estilo "lanchonete", porém, para pets: cachor
 ## Recursos do App
 
 1. Carregar os dados do cardápio a partir de uma **estrutura jSon** contendo todas as informações do produto, organizado por tipo de pet, categoria do produto, outros dados triviais e um destaque para eventuais produtos em promoção.
-2. O aplicativo SPA irá carregar, já na primeira tela, a lista de produtos. Não exige cadastro até o checkout.
+2. O aplicativo SPA irá carregar, já na primeira tela, a lista de produtos. Ao clicar em qualquer produto, é exibido o Modal de Detalhes com descrição completa, informações nutricionais e botão de adição rápida. Não exige cadastro até o checkout.
 3. O SPA deverá usar a **localstorage** para armazenar os itens no carrinho.
 4. Ao finalizar a compra no carrinho, o usuário então deverá se cadastrar (nome, whatsapp, email e endereço) e durante o cadastro adicionar a localização (**geolocation**).  _"Se a geolocalização for negada ou indisponível, o cadastro prossegue normalmente usando o endereço digitado."_
 5. Após o cadastro, pedir as credenciais do dispositivo (**CredentialsContainer**) como uma camada extra de segurança e prova de vida. _"O app tenta `navigator.credentials.get()`. Se a API não existir, não houver autenticador, ou o usuário cancelar, o fluxo exibe um aviso e continua para o pagamento. O resultado da tentativa é logado no console para fins de estudo."_
